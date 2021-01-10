@@ -1,7 +1,11 @@
 export default function NavBar(props) {
 	return (
-		<nav className="absolute top-0 flex text-white">
-			<button>Log In</button>
-		</nav>
+		<div className="w-full">
+			<nav flex className="flex text-white">
+				<p>KeepPics</p>
+				<span className="flex-grow"></span>
+				<button className="">Log In</button>
+			</nav>
+		</div>
 	);
 }
