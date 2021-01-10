@@ -1,11 +1,21 @@
+import Link from "next/link";
+
 export default function NavBar(props) {
 	return (
 		<div className="w-full">
 			<nav flex className="flex text-white">
-				<p>KeepPics</p>
+				<Logo />
 				<span className="flex-grow"></span>
-				<button className="">Log In</button>
+				<button className="p-2 text-xl">Log In</button>
 			</nav>
 		</div>
+	);
+}
+
+function Logo() {
+	return (
+		<Link href="/">
+			<a className="p-2 text-xl">KeepPics</a>
+		</Link>
 	);
 }
