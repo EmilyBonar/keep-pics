@@ -25,7 +25,7 @@ export default function Home() {
 						<ImageViewer image={image} />
 						<div className="w-full text-center">
 							<button
-								className="p-2 m-2 uppercase bg-red-500 rounded hover:bg-red-700"
+								className="p-2 m-2 uppercase bg-gray-200 rounded hover:bg-gray-400"
 								onClick={() => {
 									console.log(JSON.stringify(image));
 									fetch("/api/hello", {

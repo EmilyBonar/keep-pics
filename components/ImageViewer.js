@@ -6,10 +6,10 @@ export default function ImageViewer(props) {
 	const [imageLoaded, setImageLoaded] = useState(false);
 	return (
 		<div className="flex gap-2">
-			<div className="bg-gray-500 rounded md:w-96 md:h-96 h-44 w-44">
+			<div className="bg-gray-500 border-2 border-gray-500 rounded md:w-56 md:h-56 h-44 w-44">
 				<img
 					src={file}
-					className="object-scale-down w-full h-full"
+					className="object-scale-down w-full h-full "
 					onLoad={(e) => {
 						if (!imageLoaded) {
 							setDimensions({

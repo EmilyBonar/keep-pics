@@ -3,5 +3,5 @@
 export default (req, res) => {
 	console.log(req.body);
 	res.statusCode = 200;
-	res.json({ name: "John Doe" });
+	res.json({ name: "John Doe", image: req.body });
 };

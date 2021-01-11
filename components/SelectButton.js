@@ -12,7 +12,7 @@ export default function SelectButton(props) {
 				className="absolute w-1 h-1 opacity-0"
 				onChange={(e) => props.handleFiles(e)}
 			/>
-			<p className="p-2 m-auto tracking-wide uppercase bg-gray-100 rounded-lg hover:bg-gray-300 w-max ring-white ring-1 hover:ring-2 hover:font-semibold">
+			<p className="p-2 m-auto tracking-wide uppercase bg-gray-200 rounded-lg hover:bg-gray-400 w-max ring-white ring-1 hover:ring-2 hover:font-semibold">
 				<label htmlFor="file">Select File</label>
 			</p>
 		</div>
