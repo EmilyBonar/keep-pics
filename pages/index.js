@@ -6,18 +6,23 @@ import ImageViewer from "../components/ImageViewer";
 import { useState } from "react";
 
 export default function Home() {
-	const [file, setFile] = useState("");
+	const [image, setImage] = useState("");
 	return (
 		<div className="grid w-screen h-screen text-white">
 			<Head>
 				<title>Create Next App</title>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<NavBar />
+			<NavBar clearImage={() => setImage("")} />
 			<main className="grid content-center justify-center w-5/6 h-full grid-flow-row gap-4 m-auto">
-				<p className="text-5xl font-bold capitalize">Upload anonymously</p>
-				<UploadButton handleFiles={(e) => setFile(handleFiles(e))} />
-				<ImageViewer file={file} />
+				<p className="text-5xl font-bold text-center capitalize">
+					Upload anonymously
+				</p>
+				{image === "" || !image.type.startsWith("image/") ? (
+					<UploadButton handleFiles={(e) => setImage(handleFiles(e))} />
+				) : (
+					<ImageViewer image={image} />
+				)}
 			</main>
 			<Footer />
 		</div>
@@ -33,6 +38,5 @@ function handleFiles(e) {
 	const fileSize = (size / 1000).toFixed(2);
 	// Set the text content
 	const fileNameAndSize = `${fileName} - ${fileSize}KB`;
-	document.querySelector("#file-name").textContent = fileNameAndSize;
-	return URL.createObjectURL(file);
+	return file;
 }

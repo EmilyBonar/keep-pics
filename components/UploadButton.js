@@ -15,7 +15,6 @@ export default function UploadButton(props) {
 			<p className="p-2 m-auto border-2 border-white rounded hover:bg-gray-800 w-min ">
 				<label htmlFor="file">Upload</label>
 			</p>
-			<p id="file-name"></p>
 		</div>
 	);
 }

@@ -4,7 +4,7 @@ export default function NavBar(props) {
 	return (
 		<div className="w-full">
 			<nav className="flex text-white">
-				<Logo />
+				<Logo clearImage={props.clearImage} />
 				<span className="flex-grow"></span>
 				<button className="p-2 text-xl">Log In</button>
 			</nav>
@@ -12,10 +12,12 @@ export default function NavBar(props) {
 	);
 }
 
-function Logo() {
+function Logo(props) {
 	return (
 		<Link href="/">
-			<a className="p-2 text-xl">KeepPics</a>
+			<a onClick={props.clearImage} className="p-2 text-xl">
+				KeepPics
+			</a>
 		</Link>
 	);
 }
