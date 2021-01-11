@@ -6,20 +6,22 @@ export default function ImageViewer(props) {
 	const [imageLoaded, setImageLoaded] = useState(false);
 	return (
 		<div className="flex gap-2">
-			<img
-				src={file}
-				className="max-w-lg border-2 border-black rounded max-h-lg"
-				onLoad={(e) => {
-					if (!imageLoaded) {
-						setDimensions({
-							width: e.target.naturalWidth,
-							height: e.target.naturalHeight,
-						});
-						URL.revokeObjectURL(file);
-					}
-					setImageLoaded(true);
-				}}
-			></img>
+			<div className="bg-white rounded md:w-96 md:h-96 h-44 w-44">
+				<img
+					src={file}
+					className="object-scale-down w-full h-full"
+					onLoad={(e) => {
+						if (!imageLoaded) {
+							setDimensions({
+								width: e.target.naturalWidth,
+								height: e.target.naturalHeight,
+							});
+							URL.revokeObjectURL(file);
+						}
+						setImageLoaded(true);
+					}}
+				></img>
+			</div>
 			<div className="text-gray-200">
 				<p>Name: {props.image.name}</p>
 				<p>Size: {(props.image.size / 1024).toFixed(2)} KB</p>

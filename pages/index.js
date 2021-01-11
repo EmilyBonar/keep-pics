@@ -7,11 +7,10 @@ import { useState } from "react";
 
 export default function Home() {
 	const [image, setImage] = useState("");
-	console.log(image);
 	return (
 		<div className="grid w-screen h-screen text-white">
 			<Head>
-				<title>Create Next App</title>
+				<title>KeepPics</title>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<NavBar clearImage={() => setImage("")} />
