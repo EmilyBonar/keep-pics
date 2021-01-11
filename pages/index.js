@@ -19,7 +19,7 @@ export default function Home() {
 					Upload anonymously
 				</p>
 				{image === "" || !image.type.startsWith("image/") ? (
-					<UploadButton handleFiles={(e) => setImage(handleFiles(e))} />
+					<UploadButton handleFiles={(e) => setImage(e.target.files)} />
 				) : (
 					<ImageViewer image={image} />
 				)}
@@ -27,16 +27,4 @@ export default function Home() {
 			<Footer />
 		</div>
 	);
-}
-
-function handleFiles(e) {
-	const [file] = e.target.files;
-	console.log(file);
-	// Get the file name and size
-	const { name: fileName, size } = file;
-	// Convert size in bytes to kilo bytes
-	const fileSize = (size / 1000).toFixed(2);
-	// Set the text content
-	const fileNameAndSize = `${fileName} - ${fileSize}KB`;
-	return file;
 }
