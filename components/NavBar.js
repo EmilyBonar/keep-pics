@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function NavBar(props) {
 	return (
 		<div className="w-full">
-			<nav className="flex text-white">
+			<nav className="flex ">
 				<Logo clearImage={props.clearImage} />
 				<span className="flex-grow"></span>
 				<button className="p-2 text-xl">Log In</button>

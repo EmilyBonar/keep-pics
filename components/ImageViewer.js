@@ -6,7 +6,7 @@ export default function ImageViewer(props) {
 	const [imageLoaded, setImageLoaded] = useState(false);
 	return (
 		<div className="flex gap-2">
-			<div className="bg-white rounded md:w-96 md:h-96 h-44 w-44">
+			<div className="bg-gray-500 rounded md:w-96 md:h-96 h-44 w-44">
 				<img
 					src={file}
 					className="object-scale-down w-full h-full"
@@ -22,7 +22,7 @@ export default function ImageViewer(props) {
 					}}
 				></img>
 			</div>
-			<div className="text-gray-200">
+			<div className="">
 				<p>Name: {props.image.name}</p>
 				<p>Size: {(props.image.size / 1024).toFixed(2)} KB</p>
 				<p>
