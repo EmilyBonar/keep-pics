@@ -7,6 +7,7 @@ import { useState } from "react";
 
 export default function Home() {
 	const [image, setImage] = useState("");
+	console.log(image);
 	return (
 		<div className="grid w-screen h-screen text-white">
 			<Head>
@@ -19,7 +20,7 @@ export default function Home() {
 					Upload anonymously
 				</p>
 				{image === "" || !image.type.startsWith("image/") ? (
-					<UploadButton handleFiles={(e) => setImage(e.target.files)} />
+					<UploadButton handleFiles={(e) => setImage(e.target.files[0])} />
 				) : (
 					<ImageViewer image={image} />
 				)}
