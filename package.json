@@ -8,6 +8,7 @@
 		"start": "next start"
 	},
 	"dependencies": {
+		"@firebase/firestore": "^2.1.2",
 		"autoprefixer": "^10.2.1",
 		"dotenv": "^8.2.0",
 		"firebase": "^8.2.2",
