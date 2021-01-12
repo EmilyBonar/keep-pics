@@ -22,14 +22,21 @@ export default function ImageViewer(props) {
 					}}
 				></img>
 			</div>
-			<div className="">
-				<p>Name: {props.image.name}</p>
-				<p>Size: {(props.image.size / 1024).toFixed(2)} KB</p>
+			<div className="text-gray-800 w-96">
 				<p>
-					Last Modified: {new Date(props.image.lastModified).toLocaleString()}
+					<span className="font-semibold">Name:</span> {props.image.name}
 				</p>
 				<p>
-					Dimensions: {dimensions.width}x{dimensions.height}
+					<span className="font-semibold">Size:</span>{" "}
+					{(props.image.size / 1024).toFixed(2)} KB
+				</p>
+				<p>
+					<span className="font-semibold">Last Modified:</span>{" "}
+					{new Date(props.image.lastModified).toLocaleString()}
+				</p>
+				<p>
+					<span className="font-semibold">Dimensions:</span> {dimensions.width}x
+					{dimensions.height}
 				</p>
 			</div>
 		</div>
