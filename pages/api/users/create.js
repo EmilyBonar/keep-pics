@@ -14,4 +14,11 @@ export default async function handle(req, res) {
 
 	res.statusCode = 200;
 	res.json(ret);
+	if (req.method === "POST") {
+		// Process a POST request
+		res.statusCode = 201;
+	} else {
+		// Handle any other HTTP method
+		res.statusCode = 405;
+	}
 }

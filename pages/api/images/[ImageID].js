@@ -3,15 +3,16 @@ import admin from "./../firebaseConnect";
 export default async function handle(req, res) {
 	var db = admin.firestore();
 
-	let ret = [];
+	const {
+		query: { ImageID },
+	} = req;
+	let querySnapshot = await db.collection("images").doc(ImageID).get();
 	/*
-	let querySnapshot = await db.collection("images").get();
-
 	querySnapshot.forEach((doc) => {
-		ret.push(doc.data());
-    });
-    */
+		console.log(doc.data());
+	});
+	*/
 
 	res.statusCode = 200;
-	res.json(ret);
+	res.json(querySnapshot.data());
 }
