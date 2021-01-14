@@ -21,6 +21,7 @@ try {
 	admin.initializeApp({
 		credential: admin.credential.cert(serviceAccount),
 		databaseURL: "https://keep-pics.firebaseio.com",
+		storageBucket: "keep-pics.appspot.com",
 	});
 } catch (error) {
 	if (!/already exists/u.test(error.message)) {
