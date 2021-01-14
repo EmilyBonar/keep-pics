@@ -13,6 +13,7 @@
 		"dotenv": "^8.2.0",
 		"firebase": "^8.2.2",
 		"firebase-admin": "^9.4.2",
+		"netlify-identity-widget": "^1.9.1",
 		"next": "10.0.5",
 		"node-fetch": "^2.6.1",
 		"postcss": "^8.2.4",
