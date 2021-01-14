@@ -42,14 +42,11 @@ export default function Home() {
 	);
 }
 
-function initializeFirebase() {}
-
-async function postImage(image) {
+function initializeFirebase() {
 	try {
 		firebase.initializeApp({
-			apiKey: process.env.apiKey,
-			authDomain: process.env.authDomain,
-			projectId: process.env.projectId,
+			authDomain: "keep-pics.firebaseapp.com",
+			projectId: "keep-pics",
 			storageBucket: "keep-pics.appspot.com",
 		});
 	} catch (error) {
@@ -57,19 +54,26 @@ async function postImage(image) {
 			console.error("Firebase admin initialization error", error.stack);
 		}
 	}
+}
+
+async function postImage(image) {
+	initializeFirebase();
 
 	var db = firebase.firestore();
 	var storage = firebase.storage();
-	var storageRef = storage.ref().child("test.jpg");
 
-	await storageRef.put(image);
-	/*
-	fetch("/api/images/post", {
-		method: "POST",
-		body: image,
-		headers: {},
-	})
-		.then((response) => response.json())
-		.then((data) => console.log(data));
-		*/
+	var newImageRef = db.collection("images").doc();
+
+	let extension = image.name.split(".").pop();
+	var storageRef = storage.ref().child(`${newImageRef.id}${extension}`);
+
+	let data = {
+		name: image.name,
+		location: newImageRef.id,
+		timestamp: firebase.firestore.Timestamp.fromDate(new Date(Date.now())),
+	};
+	console.log(await db.collection("images").get());
+
+	storageRef.put(image);
+	newImageRef.set(data);
 }
