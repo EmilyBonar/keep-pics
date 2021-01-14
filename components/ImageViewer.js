@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 
 export default function ImageViewer(props) {
-	const file = URL.createObjectURL(props.image);
+	const file =
+		typeof props.image === "string"
+			? props.image
+			: URL.createObjectURL(props.image);
+	//const file = URL.createObjectURL(props.image);
 	const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 	const [imageLoaded, setImageLoaded] = useState(false);
 	return (
