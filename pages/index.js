@@ -8,11 +8,15 @@ import firebase from "firebase/app";
 import "firebase/firebase-firestore";
 import "firebase/firebase-storage";
 import netlifyAuth from "../config/netlifyAuth";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function Home() {
 	const [image, setImage] = useState("");
+	const [imageID, setImageID] = useState("");
 	let [loggedIn, setLoggedIn] = useState(netlifyAuth.isAuthenticated);
 	let [user, setUser] = useState(null);
+	const router = useRouter();
 
 	useEffect(() => {
 		netlifyAuth.initialize((user) => {
@@ -61,7 +65,9 @@ export default function Home() {
 						<div className="w-full text-center">
 							<button
 								className="p-2 m-2 uppercase bg-gray-200 rounded hover:bg-gray-400"
-								onClick={() => postImage(image, user)}
+								onClick={async () =>
+									router.push(`/images/${await postImage(image, user)}`)
+								}
 							>
 								Upload
 							</button>
