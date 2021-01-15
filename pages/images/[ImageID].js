@@ -71,7 +71,7 @@ const Image = () => {
 				user={user != null ? user : ""}
 			/>
 			<main className="grid content-center justify-center w-5/6 h-full grid-flow-row gap-4 m-auto">
-				<ImageViewer image={imageURL} />
+				<ImageViewer image={imageURL} name={imageInfo.name} />
 			</main>
 			<Footer />
 		</div>
