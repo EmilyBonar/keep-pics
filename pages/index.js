@@ -122,4 +122,6 @@ async function postImage(image, user) {
 
 	storageRef.put(image);
 	newImageRef.set(data);
+
+	return newImageRef.id;
 }
