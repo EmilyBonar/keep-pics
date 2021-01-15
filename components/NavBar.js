@@ -1,41 +1,16 @@
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import netlifyAuth from "../config/netlifyAuth";
 
 export default function NavBar(props) {
-	let [loggedIn, setLoggedIn] = useState(netlifyAuth.isAuthenticated);
-	let [user, setUser] = useState(null);
-
-	useEffect(() => {
-		netlifyAuth.initialize((user) => {
-			setLoggedIn(!!user);
-		});
-	}, [loggedIn]);
-
-	let login = () => {
-		netlifyAuth.authenticate((user) => {
-			setLoggedIn(!!user);
-			setUser(user);
-			netlifyAuth.closeModal();
-		});
-	};
-
-	let logout = () => {
-		netlifyAuth.signout(() => {
-			setLoggedIn(false);
-			setUser(null);
-		});
-	};
-
-	console.log(loggedIn);
 	return (
 		<div className="w-full">
 			<nav className="flex ">
 				<Logo clearImage={props.clearImage} />
 				<span className="flex-grow"></span>
-				<button className="p-2 text-xl" onClick={login}>
-					Log In
-				</button>
+				<Account
+					login={props.login}
+					logout={props.logout}
+					loggedIn={props.loggedIn}
+				/>
 			</nav>
 		</div>
 	);
@@ -48,5 +23,21 @@ function Logo(props) {
 				KeepPics
 			</a>
 		</Link>
+	);
+}
+
+function Account(props) {
+	return (
+		<div>
+			{props.loggedIn ? (
+				<button className="p-2 text-xl" onClick={props.logout}>
+					Log Out
+				</button>
+			) : (
+				<button className="p-2 text-xl" onClick={props.login}>
+					Log In
+				</button>
+			)}
+		</div>
 	);
 }

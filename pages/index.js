@@ -3,20 +3,51 @@ import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import SelectButton from "../components/SelectButton";
 import ImageViewer from "../components/ImageViewer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import firebase from "firebase/app";
 import "firebase/firebase-firestore";
 import "firebase/firebase-storage";
+import netlifyAuth from "../config/netlifyAuth";
 
 export default function Home() {
 	const [image, setImage] = useState("");
+	let [loggedIn, setLoggedIn] = useState(netlifyAuth.isAuthenticated);
+	let [user, setUser] = useState(null);
+
+	useEffect(() => {
+		netlifyAuth.initialize((user) => {
+			setLoggedIn(!!user);
+		});
+	}, [loggedIn]);
+
+	let login = () => {
+		netlifyAuth.authenticate((user) => {
+			setLoggedIn(!!user);
+			setUser(user);
+			netlifyAuth.closeModal();
+		});
+	};
+
+	let logout = () => {
+		netlifyAuth.signout(() => {
+			setLoggedIn(false);
+			setUser(null);
+		});
+	};
+
+	console.log(loggedIn);
 	return (
 		<div className="grid w-screen h-screen ">
 			<Head>
 				<title>KeepPics</title>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<NavBar clearImage={() => setImage("")} />
+			<NavBar
+				clearImage={() => setImage("")}
+				login={login}
+				logout={logout}
+				loggedIn={loggedIn}
+			/>
 			<main className="grid content-center justify-center w-5/6 h-full grid-flow-row gap-4 m-auto">
 				<p className="text-5xl font-bold text-center capitalize">
 					Upload anonymously
