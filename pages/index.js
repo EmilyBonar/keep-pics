@@ -36,7 +36,6 @@ export default function Home() {
 		});
 	};
 
-	console.log(user);
 	return (
 		<div className="grid w-screen h-screen ">
 			<Head>
@@ -48,7 +47,7 @@ export default function Home() {
 				login={login}
 				logout={logout}
 				loggedIn={loggedIn}
-				user={user != null ? user.user_metadata.full_name : ""}
+				user={user != null ? user : ""}
 			/>
 			<main className="grid content-center justify-center w-5/6 h-full grid-flow-row gap-4 m-auto">
 				<p className="text-5xl font-bold text-center capitalize">
@@ -62,7 +61,7 @@ export default function Home() {
 						<div className="w-full text-center">
 							<button
 								className="p-2 m-2 uppercase bg-gray-200 rounded hover:bg-gray-400"
-								onClick={() => postImage(image)}
+								onClick={() => postImage(image, user)}
 							>
 								Upload
 							</button>
@@ -89,13 +88,28 @@ function initializeFirebase() {
 	}
 }
 
-async function postImage(image) {
+async function postImage(image, user) {
 	initializeFirebase();
 
 	var db = firebase.firestore();
 	var storage = firebase.storage();
 
 	var newImageRef = db.collection("images").doc();
+
+	let userId = user == null ? "anonymous" : user.id;
+	//check if user exists
+	let userRef = await db.collection("users").doc(userId);
+	if ((await userRef.get()).exists) {
+		//if so, add ref to array
+		let userData = (await userRef.get()).data();
+		userData.images.push(newImageRef.id);
+		userRef.set(userData);
+	} else {
+		//if not, create them
+		db.collection("users")
+			.doc(userId)
+			.set({ images: [newImageRef.id] });
+	}
 
 	let extension = image.name.split(".").pop();
 	var storageRef = storage.ref().child(`${newImageRef.id}${extension}`);
