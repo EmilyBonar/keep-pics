@@ -8,6 +8,7 @@ import firebase from "firebase/app";
 import "firebase/firebase-firestore";
 import "firebase/firebase-storage";
 import netlifyAuth from "../config/netlifyAuth";
+import initializeFirebase from "../config/initializeFirebase";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -78,20 +79,6 @@ export default function Home() {
 			<Footer />
 		</div>
 	);
-}
-
-function initializeFirebase() {
-	try {
-		firebase.initializeApp({
-			authDomain: "keep-pics.firebaseapp.com",
-			projectId: "keep-pics",
-			storageBucket: "keep-pics.appspot.com",
-		});
-	} catch (error) {
-		if (!/already exists/u.test(error.message)) {
-			console.error("Firebase admin initialization error", error.stack);
-		}
-	}
 }
 
 async function postImage(image, user) {

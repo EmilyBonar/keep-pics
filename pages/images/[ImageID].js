@@ -6,6 +6,7 @@ import ImageViewer from "../../components/ImageViewer";
 import { useState, useEffect } from "react";
 import { server } from "../../config";
 import netlifyAuth from "../../config/netlifyAuth";
+import initializeFirebase from "../../config/initializeFirebase";
 import firebase from "firebase/app";
 import "firebase/firebase-storage";
 
@@ -79,20 +80,6 @@ const Image = () => {
 };
 
 export default Image;
-
-function initializeFirebase() {
-	try {
-		firebase.initializeApp({
-			authDomain: "keep-pics.firebaseapp.com",
-			projectId: "keep-pics",
-			storageBucket: "keep-pics.appspot.com",
-		});
-	} catch (error) {
-		if (!/already exists/u.test(error.message)) {
-			console.error("Firebase admin initialization error", error.stack);
-		}
-	}
-}
 
 async function getImage(location) {
 	initializeFirebase();
