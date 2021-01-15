@@ -111,15 +111,14 @@ async function postImage(image, user) {
 			.set({ images: [newImageRef.id] });
 	}
 
-	let extension = image.name.split(".").pop();
-	var storageRef = storage.ref().child(`${newImageRef.id}${extension}`);
+	//let extension = image.name.split(".").pop();
+	var storageRef = storage.ref().child(`${newImageRef.id}`);
 
 	let data = {
 		name: image.name,
 		location: newImageRef.id,
 		timestamp: firebase.firestore.Timestamp.fromDate(new Date(Date.now())),
 	};
-	console.log(await db.collection("images").get());
 
 	storageRef.put(image);
 	newImageRef.set(data);
