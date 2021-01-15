@@ -17,6 +17,7 @@ export default function Home() {
 	useEffect(() => {
 		netlifyAuth.initialize((user) => {
 			setLoggedIn(!!user);
+			setUser(user);
 		});
 	}, [loggedIn]);
 
@@ -35,7 +36,7 @@ export default function Home() {
 		});
 	};
 
-	console.log(loggedIn);
+	console.log(user);
 	return (
 		<div className="grid w-screen h-screen ">
 			<Head>
@@ -47,6 +48,7 @@ export default function Home() {
 				login={login}
 				logout={logout}
 				loggedIn={loggedIn}
+				user={user != null ? user.user_metadata.full_name : ""}
 			/>
 			<main className="grid content-center justify-center w-5/6 h-full grid-flow-row gap-4 m-auto">
 				<p className="text-5xl font-bold text-center capitalize">

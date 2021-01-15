@@ -10,6 +10,7 @@ export default function NavBar(props) {
 					login={props.login}
 					logout={props.logout}
 					loggedIn={props.loggedIn}
+					user={props.user}
 				/>
 			</nav>
 		</div>
@@ -30,9 +31,12 @@ function Account(props) {
 	return (
 		<div>
 			{props.loggedIn ? (
-				<button className="p-2 text-xl" onClick={props.logout}>
-					Log Out
-				</button>
+				<div className="flex gap-4 p-2 text-xl">
+					<p>{`Hi, ${props.user}`}</p>
+					<button className="" onClick={props.logout}>
+						Log Out
+					</button>
+				</div>
 			) : (
 				<button className="p-2 text-xl" onClick={props.login}>
 					Log In
