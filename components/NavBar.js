@@ -32,7 +32,11 @@ function Account(props) {
 		<div>
 			{props.loggedIn ? (
 				<div className="flex gap-4 p-2 text-xl">
-					<p>{`Hi, ${props.user.user_metadata.full_name}`}</p>
+					<Link href={`../users/${props.user.id}`}>
+						<a>
+							<p>{`Hi, ${props.user.user_metadata.full_name}`}</p>
+						</a>
+					</Link>
 					<button className="" onClick={props.logout}>
 						Log Out
 					</button>
