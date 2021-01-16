@@ -72,7 +72,6 @@ const User = () => {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<NavBar
-				clearImage={() => setImage("")}
 				login={login}
 				logout={logout}
 				loggedIn={loggedIn}

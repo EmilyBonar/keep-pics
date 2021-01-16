@@ -9,12 +9,10 @@ import "firebase/firebase-firestore";
 import "firebase/firebase-storage";
 import netlifyAuth from "../config/netlifyAuth";
 import initializeFirebase from "../config/initializeFirebase";
-
 import { useRouter } from "next/router";
 
 export default function Home() {
 	const [image, setImage] = useState("");
-	const [imageID, setImageID] = useState("");
 	let [loggedIn, setLoggedIn] = useState(netlifyAuth.isAuthenticated);
 	let [user, setUser] = useState(null);
 	const router = useRouter();
