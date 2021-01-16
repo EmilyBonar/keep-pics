@@ -8,6 +8,7 @@ import { server } from "../../config";
 import netlifyAuth from "../../config/netlifyAuth";
 import initializeFirebase from "../../config/initializeFirebase";
 import firebase from "firebase/app";
+import "firebase/firebase-firestore";
 import "firebase/firebase-storage";
 import Link from "next/link";
 
@@ -39,17 +40,6 @@ const User = () => {
 			});
 		}
 	}, [UserID]);
-
-	useEffect(async () => {
-		for (let i = 0; i < userInfo.images.length; i++) {
-			let locInfo = imageInfo;
-			locInfo.push({
-				location: await getImage(userInfo.images[i].location),
-				name: userInfo.images[i].name,
-			});
-			setImageInfo(locInfo);
-		}
-	}, [userInfo]);
 
 	let [loggedIn, setLoggedIn] = useState(netlifyAuth.isAuthenticated);
 	let [user, setUser] = useState(null);
@@ -92,25 +82,33 @@ const User = () => {
 				<p className="text-3xl font-bold text-center capitalize">
 					Your pictures
 				</p>
-				<div className="grid gap-8 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2">
-					{imageInfo.map((pic) => (
-						<div className="flex gap-2">
-							<Link href={`../images/${pic.id}`}>
-								<a>
-									<ImageViewer key={pic.id} image={pic.image} name={pic.name} />
-								</a>
-							</Link>
-							<button
-								className="w-6 h-6 text-white bg-red-700 rounded-lg"
-								onClick={() => {
-									console.log(pic.id);
-								}}
-							>
-								X
-							</button>
-						</div>
-					))}
-				</div>
+				{imageInfo.length != 0 ? (
+					<div className="grid gap-8 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2">
+						{imageInfo.map((pic) => (
+							<div className="flex gap-2">
+								<Link href={`../images/${pic.id}`}>
+									<a>
+										<ImageViewer
+											key={pic.id}
+											image={pic.image}
+											name={pic.name}
+										/>
+									</a>
+								</Link>
+								<button
+									className="w-6 h-6 text-white bg-red-700 rounded-lg"
+									onClick={() => {
+										deleteImage(pic.id);
+									}}
+								>
+									X
+								</button>
+							</div>
+						))}
+					</div>
+				) : (
+					<p className="text-center">You don't have any pictures</p>
+				)}
 			</main>
 			<Footer />
 		</div>
@@ -126,4 +124,27 @@ async function getImage(location) {
 	let imageRef = storage.ref(location);
 	let imageURL = await imageRef.getDownloadURL();
 	return imageURL;
+}
+
+async function deleteImage(location) {
+	initializeFirebase();
+
+	var db = firebase.firestore();
+	var storage = firebase.storage();
+
+	let dbImageRef = db.collection("images").doc(location);
+	let dbImageData = (await dbImageRef.get()).data();
+	let userID = dbImageData.user;
+	dbImageRef.delete();
+
+	//delete db doc
+	//delete from user images array
+	let dbUserRef = db.collection("users").doc(userID);
+	let dbUserData = (await dbUserRef.get()).data();
+	dbUserData.images = dbUserData.images.filter((image) => image != location);
+	dbUserRef.set(dbUserData);
+
+	//delete from storage
+	var storageImageRef = storage.ref(location);
+	storageImageRef.delete();
 }
