@@ -56,7 +56,7 @@ export default function Home() {
 			/>
 			<main className="grid content-center justify-center w-5/6 h-full grid-flow-row gap-4 m-auto">
 				<p className="text-5xl font-bold text-center capitalize">
-					Upload anonymously
+					Upload {loggedIn ? "to your account" : "anonymously"}
 				</p>
 				{image === "" || !image.type.startsWith("image/") ? (
 					<SelectButton handleFiles={(e) => setImage(e.target.files[0])} />
@@ -111,6 +111,7 @@ async function postImage(image, user) {
 		name: image.name,
 		location: newImageRef.id,
 		timestamp: firebase.firestore.Timestamp.fromDate(new Date(Date.now())),
+		user: userId,
 	};
 
 	storageRef.put(image);
