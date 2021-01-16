@@ -21,7 +21,6 @@ const User = () => {
 	useEffect(async () => {
 		if (UserID != undefined) {
 			let data = await (await fetch(`${server}/api/users/${UserID}`)).json();
-
 			let array = data.images.map((pic) => {
 				return getImage(pic.location);
 			});
@@ -29,7 +28,11 @@ const User = () => {
 			Promise.all(array).then((res) => {
 				let pushArr = [];
 				for (let i = 0; i < res.length; i++) {
-					pushArr.push({ image: res[i], name: data.images[i].name });
+					pushArr.push({
+						image: res[i],
+						name: data.images[i].name,
+						id: data.images[i].location,
+					});
 				}
 				setImageInfo(pushArr);
 			});
@@ -85,9 +88,22 @@ const User = () => {
 				user={user != null ? user : ""}
 			/>
 			<main className="grid content-center justify-center w-5/6 h-full grid-flow-row gap-4 m-auto">
-				<div className="grid grid-cols-4">
-					{imageInfo.map((pic, i) => (
-						<ImageViewer key={i} image={pic.image} name={pic.name} />
+				<p className="text-3xl font-bold text-center capitalize">
+					Your pictures
+				</p>
+				<div className="grid gap-8 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2">
+					{imageInfo.map((pic) => (
+						<div className="flex gap-2">
+							<ImageViewer key={pic.id} image={pic.image} name={pic.name} />
+							<button
+								className="w-6 h-6 text-white bg-red-700 rounded-lg"
+								onClick={() => {
+									console.log(pic.id);
+								}}
+							>
+								X
+							</button>
+						</div>
 					))}
 				</div>
 			</main>

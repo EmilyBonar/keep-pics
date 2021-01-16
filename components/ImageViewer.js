@@ -32,7 +32,7 @@ export default function ImageViewer(props) {
 					}}
 				></img>
 			</div>
-			<div className="max-w-4xl text-gray-800">
+			<div className="text-gray-800 md:w-56 w-44">
 				<p>
 					<span className="font-semibold">Name:</span>{" "}
 					{props.name != undefined ? props.name : props.image.name}
