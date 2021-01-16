@@ -9,6 +9,7 @@ import netlifyAuth from "../../config/netlifyAuth";
 import initializeFirebase from "../../config/initializeFirebase";
 import firebase from "firebase/app";
 import "firebase/firebase-storage";
+import Link from "next/link";
 
 const User = () => {
 	const router = useRouter();
@@ -94,7 +95,11 @@ const User = () => {
 				<div className="grid gap-8 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2">
 					{imageInfo.map((pic) => (
 						<div className="flex gap-2">
-							<ImageViewer key={pic.id} image={pic.image} name={pic.name} />
+							<Link href={`../images/${pic.id}`}>
+								<a>
+									<ImageViewer key={pic.id} image={pic.image} name={pic.name} />
+								</a>
+							</Link>
 							<button
 								className="w-6 h-6 text-white bg-red-700 rounded-lg"
 								onClick={() => {

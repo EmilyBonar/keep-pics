@@ -9,7 +9,7 @@ import "firebase/firebase-firestore";
 import "firebase/firebase-storage";
 import netlifyAuth from "../config/netlifyAuth";
 import initializeFirebase from "../config/initializeFirebase";
-import Link from "next/link";
+
 import { useRouter } from "next/router";
 
 export default function Home() {
