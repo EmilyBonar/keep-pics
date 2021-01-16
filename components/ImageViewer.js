@@ -5,7 +5,6 @@ export default function ImageViewer(props) {
 		typeof props.image === "string"
 			? props.image
 			: URL.createObjectURL(props.image);
-	console.log({ image: props.image, file });
 
 	const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 	const [size, setSize] = useState(0);
@@ -23,7 +22,6 @@ export default function ImageViewer(props) {
 					className="object-scale-down w-full h-full "
 					onLoad={(e) => {
 						if (!imageLoaded) {
-							console.log(e);
 							setDimensions({
 								width: e.target.naturalWidth,
 								height: e.target.naturalHeight,

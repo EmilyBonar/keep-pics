@@ -16,14 +16,36 @@ const User = () => {
 	const [userInfo, setUserInfo] = useState({
 		images: [],
 	});
-	const [imageURL, setImageURL] = useState("");
-	useEffect(() => {
+	const [imageInfo, setImageInfo] = useState([]);
+
+	useEffect(async () => {
 		if (UserID != undefined) {
-			fetch(`${server}/api/users/${UserID}`)
-				.then((response) => response.json())
-				.then((data) => setUserInfo(data));
+			let data = await (await fetch(`${server}/api/users/${UserID}`)).json();
+
+			let array = data.images.map((pic) => {
+				return getImage(pic.location);
+			});
+
+			Promise.all(array).then((res) => {
+				let pushArr = [];
+				for (let i = 0; i < res.length; i++) {
+					pushArr.push({ image: res[i], name: data.images[i].name });
+				}
+				setImageInfo(pushArr);
+			});
 		}
 	}, [UserID]);
+
+	useEffect(async () => {
+		for (let i = 0; i < userInfo.images.length; i++) {
+			let locInfo = imageInfo;
+			locInfo.push({
+				location: await getImage(userInfo.images[i].location),
+				name: userInfo.images[i].name,
+			});
+			setImageInfo(locInfo);
+		}
+	}, [userInfo]);
 
 	let [loggedIn, setLoggedIn] = useState(netlifyAuth.isAuthenticated);
 	let [user, setUser] = useState(null);
@@ -49,7 +71,6 @@ const User = () => {
 			setUser(null);
 		});
 	};
-
 	return (
 		<div className="grid w-screen h-screen ">
 			<Head>
@@ -63,10 +84,25 @@ const User = () => {
 				loggedIn={loggedIn}
 				user={user != null ? user : ""}
 			/>
-			<main className="grid content-center justify-center w-5/6 h-full grid-flow-row gap-4 m-auto"></main>
+			<main className="grid content-center justify-center w-5/6 h-full grid-flow-row gap-4 m-auto">
+				<div className="grid grid-cols-4">
+					{imageInfo.map((pic, i) => (
+						<ImageViewer key={i} image={pic.image} name={pic.name} />
+					))}
+				</div>
+			</main>
 			<Footer />
 		</div>
 	);
 };
 
 export default User;
+
+async function getImage(location) {
+	initializeFirebase();
+
+	var storage = firebase.storage();
+	let imageRef = storage.ref(location);
+	let imageURL = await imageRef.getDownloadURL();
+	return imageURL;
+}
